@@ -1,0 +1,30 @@
+version: '3.3'
+services:
+
+
+  bch:
+    build:
+      context: ./bch/
+      dockerfile: Dockerfile
+    image: crypto-bch
+    container_name: crypto-bch
+    restart: always
+    command:
+      -printtoconsole
+    ports:
+      - 10005:10005
+    volumes:
+      - bitcoincash_data:/home/bitcoin/.bitcoin
+      - ./bch/bitcoin.conf:/home/bitcoin/.bitcoin/bitcoin.conf
+
+networks:
+  default:
+    external:
+      name: ${NETWORK}
+
+volumes:
+
+  bitcoincash_data:
+    driver: local-persist
+    driver_opts:
+      mountpoint: "${LOCAL_VOLUME_MOUNT_POINT}/bitcoincash"

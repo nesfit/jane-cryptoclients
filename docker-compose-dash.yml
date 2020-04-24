@@ -1,0 +1,28 @@
+version: '3.3'
+services:
+
+  dash:
+    build:
+      context: ./dash/
+      dockerfile: Dockerfile
+    image: crypto-dash
+    container_name: crypto-dash
+    restart: always
+    command:
+      -printtoconsole
+    ports:
+      - 10003:10003
+    volumes:
+      - dash_data:/home/dash/.dashcore
+      - ./dash/dash.conf:/home/dash/.dashcore/dash.conf
+
+networks:
+  default:
+    external:
+      name: ${NETWORK}
+
+volumes:
+  dash_data:
+    driver: local-persist
+    driver_opts:
+      mountpoint: "${LOCAL_VOLUME_MOUNT_POINT}/dash"

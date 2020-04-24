@@ -1,0 +1,24 @@
+{
+    "alternativeEstimateFee": "whatthefee-disabled",
+    "alternativeEstimateFeeParams": "{\"url\": \"https://whatthefee.io/data.json\", \"periodSeconds\": 60}",
+    "coin_name": "Bitcoin",
+    "coin_shortcut": "BTC",
+    "coin_label": "Bitcoin",
+    
+    "rpc_url": "http://127.0.0.1:10001",
+    "rpc_user": "bitcoin",
+    "rpc_pass": "local321XXX",
+    "rpc_timeout": 25,
+    
+    "parse": true,
+    "message_queue_binding": "tcp://127.0.0.1:38330",
+    "subversion": "",
+    "address_format": "",
+    "xpub_magic": 76067358,
+    "xpub_magic_segwit_p2sh": 77429938,
+    "xpub_magic_segwit_native": 78792518,
+
+    "mempool_workers": 8,
+    "mempool_sub_workers": 2,
+    "block_addresses_to_keep": 300
+}

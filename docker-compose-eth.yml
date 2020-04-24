@@ -1,0 +1,41 @@
+version: '3.3'
+services:
+  eth:
+    build: 
+      context: ./eth/
+      dockerfile: Dockerfile
+    image: crypto-eth
+    container_name: crypto-eth
+#    command: --rpcapi "db,personal,eth,net,web3" --rpccorsdomain='*' --rpc --rpcaddr="0.0.0.0"
+    restart: always
+    ports:
+      - 8545:8545
+      - 30303:30303
+      - 30303:30303/udp
+    volumes:
+      - eth_data:/root/.ethereum
+      - /etc/localtime:/etc/localtime:ro
+
+  eth-netstats:
+    build:
+      context: ./eth/
+      dockerfile: Dockerfile.netstats
+    restart: on-failure
+    container_name: crypto-eth-netstats
+    environment:
+      - WS_SECRET=eth-net-stats-secret
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+    ports:
+      - "3000:3000"
+
+networks:
+  default:
+    external:
+      name: ${NETWORK}
+
+volumes:
+  eth_data:
+    driver: local-persist
+    driver_opts:
+      mountpoint: "${LOCAL_VOLUME_MOUNT_POINT}/ethereum"

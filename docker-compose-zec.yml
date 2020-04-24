@@ -1,0 +1,29 @@
+version: '3.3'
+services:
+
+  zec:
+    build:
+      context: ./zec/
+      dockerfile: Dockerfile
+    image: crypto-zec
+    container_name: crypto-zec
+    restart: always
+#    command:
+#      -printtoconsole
+    ports:
+      - 10004:10004
+    volumes:
+      - zcash_data:/root/.zcash
+      - ./zec/zcash.conf:/root/.zcash/zcash.conf
+
+
+networks:
+  default:
+    external:
+      name: ${NETWORK}
+
+volumes:
+  zcash_data:
+    driver: local-persist
+    driver_opts:
+      mountpoint: "${LOCAL_VOLUME_MOUNT_POINT}/zcash"

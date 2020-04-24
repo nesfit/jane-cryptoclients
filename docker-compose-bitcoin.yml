@@ -1,0 +1,30 @@
+version: '3.3'
+services:
+  bitcoin:
+    build:
+      context: ./bitcoin
+      dockerfile: Dockerfile
+      args:
+        BACKEND_VERSION: backend-bitcoin_0.18.1-satoshilabs-1_amd64.deb
+        BLOCKBOOK_VERSION: blockbook-bitcoin_0.3.1_amd64.deb
+        CURRENCY: bitcoin
+    image: jane-bitcoin
+    container_name: crypto-bitcoin
+    restart: always
+    ports:
+      - 3001:3001
+      - 10001:10001
+    volumes:
+      - bitcoin_data:/opt/coins/data
+
+networks:
+  default:
+    external:
+      name: ${NETWORK}
+
+volumes:
+  bitcoin_data:
+    driver: local-persist
+    driver_opts:
+      mountpoint: "${LOCAL_VOLUME_MOUNT_POINT}/bitcoin"
+

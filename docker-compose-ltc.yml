@@ -1,0 +1,28 @@
+version: '3.3'
+services:
+  ltc:
+    build:
+      context: ./ltc/
+      dockerfile: Dockerfile
+    image: crypto-ltc
+    container_name: crypto-ltc
+    restart: always
+    command:
+      -printtoconsole
+    ports:
+      - 10002:10002
+    volumes:
+      - litecoin_data:/home/litecoin/.litecoin
+      - ./ltc/litecoin.conf:/home/litecoin/.litecoin/litecoin.conf
+
+networks:
+  default:
+    external:
+      name: ${NETWORK}
+
+volumes:
+
+  litecoin_data:
+    driver: local-persist
+    driver_opts:
+      mountpoint: "${LOCAL_VOLUME_MOUNT_POINT}/litecoin"

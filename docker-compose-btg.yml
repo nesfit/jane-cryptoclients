@@ -1,0 +1,29 @@
+version: '3.3'
+services:
+
+  btg:
+    build:
+      context: ./btg/
+      dockerfile: Dockerfile
+    image: crypto-btg
+    container_name: crypto-btg
+    restart: always
+    command:
+      -printtoconsole
+    ports:
+      - 10006:10006
+    volumes:
+      - bitcoingold_data:/home/bitcoingold/.bitcoingold
+      - ./btg/bitcoingold.conf:/home/bitcoingold/.bitcoingold/bitcoingold.conf
+
+networks:
+  default:
+    external:
+      name: ${NETWORK}
+
+volumes:
+
+  bitcoingold_data:
+    driver: local-persist
+    driver_opts:
+      mountpoint: "${LOCAL_VOLUME_MOUNT_POINT}/bitcoingold"

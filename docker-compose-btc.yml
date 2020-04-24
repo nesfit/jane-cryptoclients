@@ -1,0 +1,28 @@
+version: '3.3'
+services:
+
+  btc:
+    build:
+      context: ./btc/
+      dockerfile: Dockerfile
+    image: crypto-btc
+    container_name: crypto-btc
+    restart: always
+    command:
+      -printtoconsole
+    ports:
+      - 10000:10001
+    volumes:
+      - btc_data:/home/bitcoin/.bitcoin
+      - ./btc/bitcoin.conf:/home/bitcoin/.bitcoin/bitcoin.conf
+
+networks:
+  default:
+    external:
+      name: ${NETWORK}
+
+volumes:
+  btc_data:
+    driver: local-persist
+    driver_opts:
+      mountpoint: "${LOCAL_VOLUME_MOUNT_POINT}/btc"
