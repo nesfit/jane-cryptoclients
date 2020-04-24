@@ -1,0 +1,3 @@
+[submodule "blockbook"]
+	path = blockbook
+	url = https://github.com/martinboehm/blockbook.git
